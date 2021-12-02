@@ -51,6 +51,14 @@ const {
           content TEXT NOT NULL,
           active BOOLEAN DEFAULT true
         );
+        CREATE TABLE tags (
+            id SERIAL PRIMARY KEY, 
+            name VARCHAR(255) UNIQUE NOT NULL
+        );
+        CREATE TABLE post_tags (
+            postId INTEGER REFERENCES posts(id),
+            tagId INTEGER REFERENCES tag(id) 
+        )
       `);
   
       console.log("Finished building tables!");

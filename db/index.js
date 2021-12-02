@@ -211,7 +211,17 @@ async function createTags(tagList) {
     try {
       // insert the tags, doing nothing on conflict
       // returning nothing, we'll query after
-  
+     await client.query (`
+     INSERT INTO tags(name)
+     VALUES ($1), ($2), ($3)
+     ; 
+     `)
+     const {rows} = await client.query (`
+     SELECT * FROM tags
+    WHERE name
+    IN ($1, $2, $3);
+     `)
+        return rows
       // select all tags where the name is in our taglist
       // return the rows from the query
     } catch (error) {
@@ -294,6 +304,14 @@ async function createTags(tagList) {
       throw error;
     }
   } 
+
+  const PORT = 3000;
+const express = require('express');
+const server = express();
+
+server.listen(PORT, () => {
+  console.log('The server is up on port', PORT)
+});
 
 module.exports = {  
   client,
