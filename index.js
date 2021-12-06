@@ -16,6 +16,14 @@ server.use(morgan('dev'));
 
 server.use(express.json())
 
+server.get('/background/:color', (req, res, next) => {
+    res.send(`
+      <body style="background: ${ req.params.color };">
+        <h1>Hello World</h1>
+      </body>
+    `);
+  });
+
 const apiRouter = require('./api');
 server.use('/api', apiRouter);
 
